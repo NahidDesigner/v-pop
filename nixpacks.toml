@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ["nodejs-18_x", "npm-9_x"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+# For static site deployment
+[staticAssets]
+outputDir = "dist"
+
+# If using preview server instead of static hosting
+[start]
+cmd = "npx vite preview --host 0.0.0.0 --port ${PORT:-3000}"
+
