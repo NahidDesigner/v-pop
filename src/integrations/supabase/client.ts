@@ -19,6 +19,63 @@ if (typeof window !== 'undefined') {
       keyLength: SUPABASE_PUBLISHABLE_KEY.length,
       keyPrefix: SUPABASE_PUBLISHABLE_KEY.substring(0, 20) + '...'
     });
+    
+    // Expose for debugging in console
+    (window as any).__SUPABASE_DEBUG__ = {
+      url: SUPABASE_URL,
+      key: SUPABASE_PUBLISHABLE_KEY,
+      keyFirst50: SUPABASE_PUBLISHABLE_KEY.substring(0, 50),
+      testConnection: async () => {
+        console.log('🧪 Testing Supabase connection...');
+        const url = SUPABASE_URL;
+        const key = SUPABASE_PUBLISHABLE_KEY;
+        
+        // Test REST API
+        try {
+          const restResponse = await fetch(`${url}/rest/v1/`, {
+            headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+          });
+          console.log('📊 REST API Status:', restResponse.status);
+          const restText = await restResponse.text();
+          console.log('📊 REST API Response:', restText.substring(0, 200));
+        } catch (error) {
+          console.error('❌ REST API Error:', error);
+        }
+        
+        // Test Auth Health
+        try {
+          const authResponse = await fetch(`${url}/auth/v1/health`, {
+            headers: { 'apikey': key }
+          });
+          console.log('🔐 Auth Health Status:', authResponse.status);
+          const authText = await authResponse.text();
+          console.log('🔐 Auth Health Response:', authText);
+        } catch (error) {
+          console.error('❌ Auth Health Error:', error);
+        }
+        
+        // Test Signup endpoint
+        try {
+          const signupResponse = await fetch(`${url}/auth/v1/signup`, {
+            method: 'POST',
+            headers: {
+              'apikey': key,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: 'test@example.com',
+              password: 'testpassword123'
+            })
+          });
+          console.log('📝 Signup Test Status:', signupResponse.status);
+          const signupText = await signupResponse.text();
+          console.log('📝 Signup Test Response:', signupText);
+        } catch (error) {
+          console.error('❌ Signup Test Error:', error);
+        }
+      }
+    };
+    console.log('💡 Debug helper available: window.__SUPABASE_DEBUG__.testConnection()');
   }
 }
 
