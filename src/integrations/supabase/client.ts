@@ -5,13 +5,38 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
+// Debug logging (remove in production if needed)
+if (typeof window !== 'undefined') {
+  if (!SUPABASE_URL) {
+    console.error('❌ VITE_SUPABASE_URL is not set!');
+  }
+  if (!SUPABASE_PUBLISHABLE_KEY) {
+    console.error('❌ VITE_SUPABASE_PUBLISHABLE_KEY is not set!');
+  }
+  if (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
+    console.log('✅ Supabase configured:', {
+      url: SUPABASE_URL,
+      keyLength: SUPABASE_PUBLISHABLE_KEY.length,
+      keyPrefix: SUPABASE_PUBLISHABLE_KEY.substring(0, 20) + '...'
+    });
+  }
+}
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
+if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  console.error('⚠️ Supabase client cannot be initialized - missing environment variables');
+}
+
+export const supabase = createClient<Database>(
+  SUPABASE_URL || '',
+  SUPABASE_PUBLISHABLE_KEY || '',
+  {
+    auth: {
+      storage: localStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+    }
   }
-});
+);
