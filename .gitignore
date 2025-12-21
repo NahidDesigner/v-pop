@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Build scripts (keep these)
+!build.sh
+
 # Environment variables
 .env
 .env.local
