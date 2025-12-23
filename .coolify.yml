@@ -1,0 +1,6 @@
+# Coolify configuration for Static Site
+build:
+  type: static
+  install: npm install
+  build: npm run build
+  output: dist

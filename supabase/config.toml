@@ -1,0 +1,13 @@
+project_id = "echcjurluxsgcvdeatpm"
+
+[functions.get-widget]
+verify_jwt = false
+
+[functions.track-analytics]
+verify_jwt = false
+
+[functions.embed-script]
+verify_jwt = false
+
+[functions.send-lead-notification]
+verify_jwt = false
