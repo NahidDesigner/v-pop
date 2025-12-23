@@ -12,12 +12,19 @@ FROM auth.users
 WHERE email = 'your-email@example.com'
 ON CONFLICT (user_id, role) DO NOTHING;
 
--- Verify the user was created
+-- Verify the user was created and is admin
 SELECT 
     u.email,
+    u.id,
     ur.role,
-    u.created_at
+    u.created_at as user_created_at,
+    ur.created_at as role_created_at
 FROM auth.users u
 LEFT JOIN public.user_roles ur ON u.id = ur.user_id
 WHERE u.email = 'your-email@example.com';
+
+-- Expected result:
+-- email: your-email@example.com
+-- role: admin
+-- If role is NULL, the user doesn't exist - sign up first!
 
