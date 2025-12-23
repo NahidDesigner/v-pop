@@ -4,11 +4,22 @@
 -- ============================================
 -- 1. Check Auth Configuration (Most Common)
 -- ============================================
--- This shows auth-related configuration including JWT settings
-SELECT * FROM auth.config;
+-- NOTE: For self-hosted Supabase, these tables might not exist.
+-- Keys are usually in environment variables, not in the database.
 
--- If that doesn't work, try:
-SELECT * FROM auth.settings;
+-- Try auth.config (might not exist in self-hosted):
+-- SELECT * FROM auth.config;
+
+-- Try auth.settings (might not exist):
+-- SELECT * FROM auth.settings;
+
+-- Check what auth tables actually exist:
+SELECT 
+  table_schema,
+  table_name
+FROM information_schema.tables
+WHERE table_schema = 'auth'
+ORDER BY table_name;
 
 -- ============================================
 -- 2. Check for JWT Secret (Used to Generate Keys)
@@ -106,10 +117,20 @@ SELECT
 -- ============================================
 -- 9. Check API Keys from Supabase's Internal Tables
 -- ============================================
--- Some self-hosted Supabase instances store keys in specific tables
-SELECT * FROM supabase.keys;
-SELECT * FROM supabase.config;
-SELECT * FROM supabase.settings;
+-- NOTE: These tables usually don't exist in self-hosted Supabase.
+-- Keys are stored in environment variables, not in the database.
+
+-- Check if supabase schema exists:
+SELECT EXISTS (
+  SELECT 1 
+  FROM information_schema.schemata 
+  WHERE schema_name = 'supabase'
+) as supabase_schema_exists;
+
+-- If it exists, try these (will error if tables don't exist):
+-- SELECT * FROM supabase.keys;
+-- SELECT * FROM supabase.config;
+-- SELECT * FROM supabase.settings;
 
 -- ============================================
 -- 10. Find All Tables That Might Contain Keys
@@ -130,13 +151,29 @@ WHERE schemaname IN ('public', 'auth', 'storage', 'supabase', 'vault')
 ORDER BY schemaname, tablename;
 
 -- ============================================
--- IMPORTANT NOTES:
+-- IMPORTANT NOTES FOR SELF-HOSTED SUPABASE:
 -- ============================================
--- 1. Keys are usually stored in ENVIRONMENT VARIABLES, not in the database
--- 2. For self-hosted Supabase, check Coolify → Supabase Resource → Environment Variables
+-- ⚠️ Keys are NOT stored in the database for self-hosted Supabase!
+-- ⚠️ They are stored in ENVIRONMENT VARIABLES only.
+
+-- To find your actual keys:
+-- 1. Coolify → Supabase Resource → Environment Variables
+--    - Look for: ANON_KEY, SERVICE_ROLE_KEY, JWT_SECRET
+-- 
+-- 2. Supabase Studio → Settings → API
+--    - Shows: anon public key, service_role key
+--
 -- 3. The ANON_KEY is generated from JWT_SECRET + project settings
--- 4. If you can't find keys in DB, they're definitely in environment variables
--- 5. To see actual keys, check Supabase Studio → Settings → API
+--    - If JWT_SECRET changes, ANON_KEY becomes invalid
+--    - They must match!
+
+-- ============================================
+-- What You CAN Check in Database:
+-- ============================================
+-- ✅ What schemas/tables exist
+-- ✅ What your current connection role is
+-- ✅ JWT claims if you're authenticated
+-- ❌ NOT the actual key values (they're in env vars)
 
 -- ============================================
 -- Quick Check: What's Your Current Connection Using?
