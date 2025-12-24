@@ -6,16 +6,87 @@ This guide covers deploying VideoPopup on your own server using **Coolify** and 
 
 ## 📋 Prerequisites
 
-- A server with Docker installed
-- Coolify installed (https://coolify.io)
-- Domain name configured
-- Git repository access
+- A server with Docker installed (Coolify will handle this)
+- **Coolify installed** (https://coolify.io) - Self-hosted or Cloud version
+- Domain name configured (optional, can use IP initially)
+- Git repository access (GitHub: https://github.com/NahidDesigner/v-pop.git)
+- SSH access to your server (for Coolify installation)
+
+## 🎯 Quick Start with Coolify Resources
+
+Coolify simplifies deployment with its **Resources** feature:
+
+1. **Supabase**: Install via Project → Resources → Add Supabase (one-click)
+2. **Frontend**: Deploy via Project → New Resource → Git Repository
+3. **Edge Functions**: Deploy via Resources or Docker Compose
+
+This guide covers both the simplified Coolify Resources method and manual alternatives.
 
 ---
 
-## 🗄️ Part 1: Self-Hosted Supabase Setup
+## 🗄️ Part 1: Self-Hosted Supabase Setup via Coolify Resources
 
-### 1.1 Install Supabase
+> **Note:** Coolify provides a one-click installation for Supabase through its **Resources** feature. This is the recommended method as it handles Docker setup, networking, and configuration automatically.
+
+### 1.1 Install Supabase via Coolify Resources
+
+1. **Navigate to Your Project in Coolify**
+   - Go to your VideoPopup project in Coolify dashboard
+   - Click on **Resources** tab (or **New Resource** → **Resources**)
+
+2. **Add Supabase Resource**
+   - Click **+ New Resource** or **Add Resource**
+   - Select **Supabase** from the available services
+   - Coolify will automatically:
+     - Set up Docker containers for Supabase
+     - Configure PostgreSQL database
+     - Set up Auth service
+     - Configure API Gateway
+     - Generate API keys automatically
+
+3. **Configure Supabase Settings**
+   - **Resource Name**: `videopop-supabase` (or your preferred name)
+   - **Domain**: `supabase.yourdomain.com` (optional, for custom domain)
+   - **PostgreSQL Password**: Set a strong password (or let Coolify generate one)
+   - **JWT Secret**: Set a secure JWT secret (minimum 32 characters) or let Coolify generate
+
+4. **Environment Variables** (if needed)
+   - Coolify will handle most configuration automatically
+   - You can add custom environment variables if needed:
+     - `SITE_URL`: `https://videopop.yourdomain.com`
+     - `API_EXTERNAL_URL`: `https://supabase.yourdomain.com`
+     - SMTP settings (optional, for email functionality)
+
+5. **Deploy Supabase**
+   - Click **Deploy** or **Save**
+   - Wait for Coolify to pull Docker images and start containers
+   - This may take a few minutes on first deployment
+
+### 1.2 Access Supabase Credentials
+
+After deployment, Coolify will provide:
+
+- **Supabase URL**: Usually `http://your-server-ip:port` or your custom domain
+- **API URL**: `https://supabase.yourdomain.com/rest/v1/`
+- **Anon Key**: Available in Coolify's resource environment variables
+- **Service Role Key**: Available in Coolify's resource environment variables
+- **Database Connection String**: Available in Coolify's resource details
+
+**To find your keys:**
+1. Go to your Supabase resource in Coolify
+2. Navigate to **Environment Variables** or **Configuration** tab
+3. Look for `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY`
+4. Copy these values for use in your VideoPopup app
+
+### 1.3 Access Supabase Dashboard
+
+- **Dashboard URL**: Coolify will provide the dashboard URL
+- **Default**: Usually accessible via the resource's domain or port
+- **Login**: Use the credentials shown in Coolify's resource details
+
+### 1.4 Alternative: Manual Supabase Installation
+
+If you prefer manual installation or Coolify doesn't have Supabase in Resources:
 
 ```bash
 # Clone Supabase Docker setup
@@ -24,59 +95,12 @@ cd supabase/docker
 
 # Copy environment template
 cp .env.example .env
+
+# Edit .env with your settings (see setup/.env.example for reference)
+# Then start with: docker compose up -d
 ```
 
-### 1.2 Configure Supabase Environment
-
-Edit the `.env` file in `supabase/docker/`:
-
-```bash
-# === CRITICAL SECURITY SETTINGS ===
-# Generate these with: openssl rand -base64 32
-
-# PostgreSQL password
-POSTGRES_PASSWORD=your-strong-password-here
-
-# JWT secret (MUST be at least 32 characters)
-JWT_SECRET=your-super-secret-jwt-token-at-least-32-chars
-
-# Generate anon and service keys at: https://supabase.com/docs/guides/self-hosting/docker#generate-api-keys
-ANON_KEY=your-generated-anon-key
-SERVICE_ROLE_KEY=your-generated-service-role-key
-
-# === URL CONFIGURATION ===
-SITE_URL=https://videopop.yourdomain.com
-API_EXTERNAL_URL=https://supabase.yourdomain.com
-
-# === SMTP (Optional) ===
-SMTP_HOST=smtp.yourprovider.com
-SMTP_PORT=587
-SMTP_USER=your-smtp-user
-SMTP_PASS=your-smtp-password
-SMTP_SENDER_NAME=VideoPopup
-SMTP_ADMIN_EMAIL=admin@yourdomain.com
-```
-
-### 1.3 Generate API Keys
-
-Use the Supabase key generator or run:
-
-```bash
-# Install jwt-cli or use online tool
-# Go to: https://supabase.com/docs/guides/self-hosting/docker#generate-api-keys
-# Use your JWT_SECRET to generate ANON_KEY and SERVICE_ROLE_KEY
-```
-
-### 1.4 Start Supabase
-
-```bash
-docker compose up -d
-```
-
-### 1.5 Verify Installation
-
-- Dashboard: `https://supabase.yourdomain.com`
-- API: `https://supabase.yourdomain.com/rest/v1/`
+See `setup/.env.example` for environment variable reference.
 
 ---
 
@@ -113,71 +137,164 @@ psql postgresql://postgres:YOUR_PASSWORD@supabase.yourdomain.com:5432/postgres -
 
 ## ⚡ Part 3: Edge Functions Deployment
 
-### 3.1 Option A: Supabase Edge Functions (Recommended)
+> **Note:** If you installed Supabase via Coolify Resources, edge functions may be included. Otherwise, you can deploy them separately.
+
+### 3.1 Option A: Via Supabase Resource (If Available)
+
+If your Supabase resource in Coolify includes edge functions:
+
+1. Go to your Supabase resource in Coolify
+2. Navigate to **Edge Functions** or **Functions** section
+3. Deploy functions from `supabase/functions/` directory:
+   - `get-widget`
+   - `track-analytics`
+   - `embed-script`
+   - `send-lead-notification`
+
+### 3.2 Option B: Deploy as Separate Resources in Coolify
+
+You can deploy each edge function as a separate resource:
+
+1. **Create New Resource** → **Docker Compose** or **Dockerfile**
+2. Use the provided `setup/docker-compose.edge-functions.yml`
+3. Or create individual Docker resources for each function
+4. Configure environment variables:
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+
+### 3.3 Option C: Using Supabase CLI
+
+If you have Supabase CLI installed:
 
 ```bash
 # Navigate to your project
 cd your-videopop-project
 
+# Link to your self-hosted Supabase
+supabase link --project-ref your-project-id
+
 # Deploy all functions
-supabase functions deploy get-widget --project-ref your-project-id
-supabase functions deploy track-analytics --project-ref your-project-id
-supabase functions deploy embed-script --project-ref your-project-id
-supabase functions deploy send-lead-notification --project-ref your-project-id
+supabase functions deploy get-widget
+supabase functions deploy track-analytics
+supabase functions deploy embed-script
+supabase functions deploy send-lead-notification
 ```
 
-### 3.2 Option B: Deno Deploy (Alternative)
-
-1. Create a Deno Deploy project at https://dash.deno.com
-2. Connect your GitHub repository
-3. Deploy each function from `supabase/functions/`
-
-### 3.3 Option C: Self-Hosted Deno (Docker)
+### 3.4 Option D: Self-Hosted Deno (Docker Compose)
 
 Use the provided `setup/docker-compose.edge-functions.yml`:
 
 ```bash
+# Set environment variables
+export SUPABASE_URL=https://supabase.yourdomain.com
+export SUPABASE_ANON_KEY=your-anon-key
+export SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Deploy
 docker compose -f setup/docker-compose.edge-functions.yml up -d
 ```
 
+### 3.5 Option E: Deno Deploy (External)
+
+1. Create a Deno Deploy project at https://dash.deno.com
+2. Connect your GitHub repository
+3. Deploy each function from `supabase/functions/`
+4. Update your frontend to use Deno Deploy URLs instead of Supabase edge function URLs
+
 ---
 
-## 🚀 Part 4: Coolify Deployment
+## 🚀 Part 4: Coolify Frontend Deployment
 
-### 4.1 Create New Service
+### 4.1 Create New Application Resource
 
-1. Log into Coolify dashboard
-2. Click **New Resource** → **Public Repository**
-3. Enter your Git repository URL
-4. Select **Static Site** or **Nixpacks**
+1. **Navigate to Your Project**
+   - In Coolify dashboard, go to your project
+   - Click **New Resource** → **Public Repository** (or **Git Repository**)
+
+2. **Connect Git Repository**
+   - Enter your Git repository URL: `https://github.com/NahidDesigner/v-pop.git`
+   - Or select from connected Git providers (GitHub, GitLab, etc.)
+   - Coolify will automatically detect the repository
+
+3. **Select Application Type**
+   - Choose **Static Site** (recommended for Vite builds)
+   - Or **Nixpacks** (auto-detects build configuration)
 
 ### 4.2 Configure Build Settings
 
+In the **Build** section, configure:
+
 | Setting | Value |
 |---------|-------|
-| Build Command | `npm install && npm run build` |
-| Publish Directory | `dist` |
-| Node Version | `20` |
+| **Build Command** | `npm install && npm run build` |
+| **Publish Directory** | `dist` |
+| **Node Version** | `20` (or latest LTS) |
+| **Install Command** | `npm install` (default) |
 
 ### 4.3 Add Environment Variables
 
-Add these in Coolify's Environment Variables section:
+In the **Environment Variables** section, add:
 
 ```
 VITE_SUPABASE_URL=https://supabase.yourdomain.com
-VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key-from-supabase-resource
 VITE_SUPABASE_PROJECT_ID=videopop
 ```
 
-### 4.4 Configure Domain
+**Important:** 
+- Get `VITE_SUPABASE_URL` from your Supabase resource in Coolify
+- Get `VITE_SUPABASE_PUBLISHABLE_KEY` from Supabase resource's environment variables
+- These are available in the Supabase resource you created in Part 1
+
+### 4.4 Configure Domain & SSL
 
 1. Go to **Domains** tab
-2. Add your domain (e.g., `videopop.yourdomain.com`)
-3. Enable SSL
+2. Click **Add Domain**
+3. Enter your domain: `videopop.yourdomain.com`
+4. Enable **SSL/TLS** (Let's Encrypt - automatic)
+5. Enable **Force HTTPS** (redirect HTTP to HTTPS)
 
-### 4.5 Deploy
+### 4.5 Configure Nginx (for SPA Routing)
 
-Click **Deploy** and wait for the build to complete.
+Since this is a React SPA, add custom Nginx configuration:
+
+1. Go to **Advanced** or **Nginx Configuration** section
+2. Add this configuration:
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+
+# Cache static assets
+location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+
+# Security headers
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-XSS-Protection "1; mode=block" always;
+```
+
+### 4.6 Deploy
+
+1. Click **Deploy** or **Save & Deploy**
+2. Coolify will:
+   - Clone your repository
+   - Install dependencies
+   - Build the application
+   - Deploy to the configured domain
+3. Monitor the build logs in real-time
+4. Wait for deployment to complete (usually 2-5 minutes)
+
+### 4.7 Verify Deployment
+
+- Visit your domain: `https://videopop.yourdomain.com`
+- Check that the app loads correctly
+- Test authentication flow
 
 ---
 

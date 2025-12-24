@@ -1,8 +1,12 @@
-# Welcome to your Lovable project
+# VideoPopup - Video Popup Widget SaaS Platform
+
+A complete SaaS platform for creating and embedding video popup widgets on websites. Built with React, TypeScript, Supabase, and deployed via Coolify.
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Repository**: https://github.com/NahidDesigner/v-pop.git  
+**Created with**: Lovable AI  
+**Deployment**: Self-hosted via Coolify
 
 ## How can I edit this code?
 
@@ -61,6 +65,26 @@ This project is built with:
 - Tailwind CSS
 
 ## How can I deploy this project?
+
+### Self-Hosted Deployment (Recommended)
+
+This project is designed to be self-hosted using **Coolify** and **Supabase**.
+
+**📚 Complete Deployment Guide:**
+- **[Complete Step-by-Step Guide](./setup/COMPLETE-DEPLOYMENT-GUIDE.md)** - Beginner-friendly, detailed instructions
+- **[Quick Start Guide](./setup/QUICK-START.md)** - For experienced users
+- **[Deployment Documentation](./setup/DEPLOYMENT.md)** - Technical reference
+
+**Quick Overview:**
+1. Install Coolify on your server
+2. Install Supabase via Coolify Resources
+3. Run database migrations
+4. Deploy frontend via Coolify
+5. Configure and enjoy!
+
+See the [Complete Deployment Guide](./setup/COMPLETE-DEPLOYMENT-GUIDE.md) for full instructions.
+
+### Lovable Deployment (Alternative)
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 

@@ -3,7 +3,33 @@
 # ==============================================================================
 # Add these settings in your Coolify dashboard for the VideoPopup service
 # ==============================================================================
+#
+# IMPORTANT: Coolify has a Resources feature that allows one-click installation
+# of Supabase and other services. Use Project > Resources to add Supabase first.
+# ==============================================================================
 
+# ============================================================================
+# STEP 1: INSTALL SUPABASE VIA RESOURCES
+# ============================================================================
+# 1. Go to your Project in Coolify
+# 2. Click on "Resources" tab
+# 3. Click "New Resource" or "Add Resource"
+# 4. Select "Supabase" from available services
+# 5. Configure:
+#    - Resource Name: videopop-supabase
+#    - Domain: supabase.yourdomain.com (optional)
+#    - PostgreSQL Password: (set strong password)
+#    - JWT Secret: (set secure secret, min 32 chars)
+# 6. Deploy and note the generated API keys
+#
+# After deployment, get these from Supabase resource:
+# - SUPABASE_URL (from resource details)
+# - SUPABASE_ANON_KEY (from environment variables)
+# - SUPABASE_SERVICE_ROLE_KEY (from environment variables)
+# ============================================================================
+
+# ============================================================================
+# STEP 2: DEPLOY FRONTEND APPLICATION
 # ============================================================================
 # SERVICE TYPE
 # ============================================================================
@@ -20,10 +46,16 @@ Node Version: 20
 # ENVIRONMENT VARIABLES (Build & Runtime)
 # ============================================================================
 # Copy and paste these into Coolify's Environment Variables section
+# IMPORTANT: Get these values from your Supabase resource created in Step 1
 
 VITE_SUPABASE_URL=https://supabase.yourdomain.com
+# ^ Get this from your Supabase resource's URL/domain
+
 VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key-here
+# ^ Get this from Supabase resource > Environment Variables > SUPABASE_ANON_KEY
+
 VITE_SUPABASE_PROJECT_ID=videopop
+# ^ Optional: Your project identifier
 
 # ============================================================================
 # DOMAIN CONFIGURATION

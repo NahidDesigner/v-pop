@@ -13,6 +13,29 @@ echo "║           VideoPopup - Self-Hosted Setup Wizard              ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 
+# Check if using Coolify
+echo -e "${BLUE}═══════════════════════════════════════════════════════════════${NC}"
+echo -e "${BLUE}Coolify Users: Quick Setup${NC}"
+echo -e "${BLUE}═══════════════════════════════════════════════════════════════${NC}"
+echo ""
+echo "If you're using Coolify, we recommend:"
+echo "1. Install Supabase via: Project > Resources > Add Supabase"
+echo "2. Get API keys from Supabase resource's environment variables"
+echo "3. Deploy frontend via: Project > New Resource > Git Repository"
+echo "4. Use this script only for database migrations and edge functions"
+echo ""
+read -p "Are you using Coolify? (y/N): " USE_COOLIFY
+if [ "$USE_COOLIFY" = "y" ] || [ "$USE_COOLIFY" = "Y" ]; then
+    echo ""
+    echo -e "${GREEN}✓ Using Coolify - You can skip Supabase installation steps${NC}"
+    echo "Continue with this script for:"
+    echo "  - Database migrations"
+    echo "  - Edge functions setup (if not using Supabase edge functions)"
+    echo ""
+    read -p "Press Enter to continue..."
+    echo ""
+fi
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -59,12 +82,26 @@ if [ ! -f ".env" ]; then
     echo "Let's configure your environment..."
     echo ""
     
+    if [ "$USE_COOLIFY" = "y" ] || [ "$USE_COOLIFY" = "Y" ]; then
+        echo -e "${YELLOW}Note: Get these values from your Supabase resource in Coolify${NC}"
+        echo "  - Supabase URL: Resource > Details > URL"
+        echo "  - Anon Key: Resource > Environment Variables > SUPABASE_ANON_KEY"
+        echo "  - Service Role Key: Resource > Environment Variables > SUPABASE_SERVICE_ROLE_KEY"
+        echo ""
+    fi
+    
     read -p "Enter your Supabase URL (e.g., https://supabase.yourdomain.com): " SUPABASE_URL
     read -p "Enter your Supabase Anon Key: " ANON_KEY
     read -p "Enter your Supabase Service Role Key: " SERVICE_KEY
     read -p "Enter your app domain (e.g., https://videopop.yourdomain.com): " APP_URL
-    read -p "Enter PostgreSQL password: " -s DB_PASSWORD
-    echo ""
+    
+    if [ "$USE_COOLIFY" != "y" ] && [ "$USE_COOLIFY" != "Y" ]; then
+        read -p "Enter PostgreSQL password: " -s DB_PASSWORD
+        echo ""
+    else
+        echo -e "${YELLOW}Note: Database password managed by Coolify${NC}"
+        DB_PASSWORD="managed-by-coolify"
+    fi
     
     cat > .env << EOF
 # VideoPopup Environment Configuration
