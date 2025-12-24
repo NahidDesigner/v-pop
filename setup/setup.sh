@@ -178,7 +178,7 @@ echo ""
 read -p "Do you want to start edge functions with Docker? (y/N): " START_EDGE
 if [ "$START_EDGE" = "y" ] || [ "$START_EDGE" = "Y" ]; then
     echo "Starting edge functions..."
-    docker compose -f docker-compose.yaml up -d
+    docker compose -f setup/docker-compose.edge-functions.yaml up -d
     echo -e "${GREEN}✓ Edge functions started${NC}"
     echo ""
     echo "Edge function endpoints:"

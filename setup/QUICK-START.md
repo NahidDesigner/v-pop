@@ -57,7 +57,9 @@ Access: `http://your-server-ip:8000`
 ### 6. Deploy Frontend (All in Coolify Dashboard)
 1. **In Coolify Dashboard**: **New Resource** → **Public Repository**
 2. Enter repository: `https://github.com/NahidDesigner/v-pop.git`
-3. Select type: **Static Site**
+3. **⚠️ IMPORTANT**: Select type: **Static Site** (NOT Docker Compose!)
+   - Docker Compose files are ONLY for edge functions
+   - Using Docker Compose will cause deployment errors
 4. **Build Settings**:
    - Build Command: `npm install && npm run build`
    - Publish Directory: `dist`
@@ -96,7 +98,7 @@ Access: `http://your-server-ip:8000`
 ### 8. Deploy Edge Functions (Optional, Through Coolify Dashboard)
 If Supabase doesn't include edge functions:
 1. **In Coolify Dashboard**: **New Resource** → **Docker Compose**
-2. Paste contents of `docker-compose.yaml` (from root) or `setup/docker-compose.edge-functions.yaml`
+2. Paste contents of `setup/docker-compose.edge-functions.yaml`
 3. **Environment Variables** tab → Add variables from step 4
 4. Click **Deploy**
 

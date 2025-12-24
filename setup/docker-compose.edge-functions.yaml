@@ -1,12 +1,13 @@
 # ==============================================================================
-# VideoPopup - Edge Functions Docker Setup
+# VideoPopup - Edge Functions Docker Compose for Coolify
 # ==============================================================================
-# This Docker Compose file runs edge functions locally using Deno
-# Use this for self-hosting edge functions without Supabase's hosted service
+# This Docker Compose file is optimized for Coolify deployment
+# Use this when deploying edge functions via Coolify Resources > Docker Compose
 #
-# Usage:
-#   docker compose -f setup/docker-compose.edge-functions.yaml up -d
-#   Or: docker compose -f docker-compose.yaml up -d (from root)
+# In Coolify:
+# 1. Go to Resources > New Resource > Docker Compose
+# 2. Paste this entire file
+# 3. Set environment variables in Coolify dashboard
 # ==============================================================================
 
 version: '3.8'
@@ -101,7 +102,7 @@ services:
     container_name: vp-edge-proxy
     restart: unless-stopped
     volumes:
-      - ./nginx-edge-functions.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./setup/nginx-edge-functions.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "8080:80"
     networks:
@@ -115,3 +116,4 @@ services:
 networks:
   videopop-net:
     driver: bridge
+

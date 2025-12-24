@@ -425,8 +425,8 @@ If Supabase doesn't include edge functions, use Docker Compose:
 
 #### 9.2 Configure Docker Compose
 
-1. Create a new file or use the provided one: `setup/docker-compose.edge-functions.yaml` (or `docker-compose.yaml` in root)
-2. In Coolify, paste the contents of `docker-compose.yaml` (from project root) or `setup/docker-compose.edge-functions.yaml`
+1. Use the provided file: `setup/docker-compose.edge-functions.yaml`
+2. In Coolify, paste the contents of `setup/docker-compose.edge-functions.yaml`
 3. Add environment variables:
    ```
    SUPABASE_URL=https://supabase.yourdomain.com
@@ -463,8 +463,15 @@ Now we'll deploy the React frontend application.
 
 ### 10.2 Configure Build Settings
 
+**⚠️ CRITICAL: Application Type Selection**
+
+- **MUST Select**: **"Static Site"** (recommended for Vite/React)
+- **DO NOT Select**: "Docker Compose" or "Dockerfile"
+  - The `docker-compose.yaml` files are ONLY for edge functions
+  - Using Docker Compose for frontend will cause errors!
+
 **Application Type:**
-- Select **"Static Site"** (recommended for Vite/React)
+- Select **"Static Site"** (this is the correct choice!)
 
 **Build Configuration:**
 - **Build Command**: `npm install && npm run build`
@@ -895,8 +902,7 @@ Save these securely:
 
 - `setup/complete-migration.sql` - Database schema
 - `setup/create-admin.sql` - Admin user creation
-- `setup/docker-compose.edge-functions.yaml` - Edge functions
-- `docker-compose.yaml` - Edge functions (root, for Coolify)
+- `setup/docker-compose.edge-functions.yaml` - Edge functions (for Coolify)
 - `setup/.env.example` - Environment variables template
 
 ### Common Tasks (All Through Dashboards)
