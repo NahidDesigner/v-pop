@@ -31,16 +31,6 @@ This directory contains all setup files and deployment documentation for VideoPo
    - Best practices
    - **Use this to understand Coolify capabilities**
 
-5. **[FILES-REVIEW.md](./FILES-REVIEW.md)**
-   - Detailed review of all setup files
-   - File purposes and status
-   - **Use this to understand what each file does**
-
-6. **[QUICK-REVIEW.md](./QUICK-REVIEW.md)**
-   - Quick summary of all files
-   - Status checklist
-   - **Use this for a quick overview**
-
 ## 🔧 Setup Files
 
 ### Configuration Files
@@ -107,14 +97,13 @@ Use this checklist to ensure you have all files:
 - [x] `COMPLETE-DEPLOYMENT-GUIDE.md` - Main deployment guide
 - [x] `QUICK-START.md` - Quick reference
 - [x] `DEPLOYMENT.md` - Technical reference
-- [x] `COOLIFY-FEATURES.md` - Coolify overview
-- [x] `.env.example` - Environment template
+- [x] `COOLIFY-FEATURES.md` - Coolify overview (optional)
 - [x] `coolify-config.txt` - Coolify config
 - [x] `complete-migration.sql` - Database schema
 - [x] `create-admin.sql` - Admin creation
-- [x] `setup.sh` - Setup script
+- [x] `setup.sh` - Setup script (optional)
 - [x] `docker-compose.edge-functions.yaml` - Edge functions (for Coolify)
-- [x] `nginx-edge-functions.conf` - Nginx config
+- [x] `nginx-edge-functions.conf` - Nginx config for edge functions
 
 ## 🎯 Which File Should I Use?
 
