@@ -1,20 +1,16 @@
 # Nixpacks Configuration for VideoPopup Frontend
-# Forces Node.js and build process
-
-[variables]
-NIXPACKS_NODE_VERSION = "20"
+# Forces Node.js 20 and build process
 
 [phases.setup]
-nixPkgs = ["nodejs"]
+nixPkgs = ["nodejs-20_x"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm ci"]
 
 [phases.build]
-dependsOn = ["install"]
 cmds = ["npm run build"]
 
-# Start command - serve static files using Node.js HTTP server
-[start]
-cmd = "node server.js"
+# For static site deployment
+[staticAssets]
+outputDir = "dist"
 
