@@ -57,12 +57,15 @@ Access: `http://your-server-ip:8000`
 ### 6. Deploy Frontend (All in Coolify Dashboard)
 1. **In Coolify Dashboard**: **New Resource** → **Public Repository**
 2. Enter repository: `https://github.com/NahidDesigner/v-pop.git`
-3. **⚠️ IMPORTANT**: Select type: **Static Site** (NOT Docker Compose!)
-   - Docker Compose files are ONLY for edge functions
-   - Using Docker Compose will cause deployment errors
-4. **Build Settings**:
-   - Build Command: `npm install && npm run build`
-   - Publish Directory: `dist`
+3. **⚠️ IMPORTANT**: Select build pack: **"Nixpacks"** (NOT Static, NOT Docker Compose!)
+   - **Nixpacks** auto-detects Vite and builds automatically
+   - **Static** requires pre-built files (not recommended)
+   - **Docker Compose** is ONLY for edge functions
+4. **Nixpacks will automatically**:
+   - Detect Vite/React
+   - Run `npm install && npm run build`
+   - Use `dist/` as output
+   - Handle Node.js version
 5. **Environment Variables** tab → Add:
    ```
    VITE_SUPABASE_URL=https://supabase.yourdomain.com

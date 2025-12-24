@@ -456,35 +456,55 @@ Now we'll deploy the React frontend application.
 
 ### 10.1 Create Frontend Resource
 
-1. In your VideoPopup project, click **"+ New Resource"**
+1. In your VideoPopup project, click **"+ New Resource"** or **"New Application"**
 2. Select **"Public Repository"** or **"Git Repository"**
 3. Enter repository URL: `https://github.com/NahidDesigner/v-pop.git`
-4. Click **"Connect"** or **"Next"**
+4. Click **"Connect"** or **"Continue"**
+
+**Note:** Coolify v4 will show build pack options. Continue to next step to select the correct one.
 
 ### 10.2 Configure Build Settings
 
-**⚠️ CRITICAL: Application Type Selection**
+**⚠️ CRITICAL: Build Pack Selection in Coolify v4**
 
-- **MUST Select**: **"Static Site"** (recommended for Vite/React)
-- **DO NOT Select**: "Docker Compose" or "Dockerfile"
-  - The `docker-compose.yaml` files are ONLY for edge functions
-  - Using Docker Compose for frontend will cause errors!
+In **Coolify v4**, you have two options:
 
-**Application Type:**
-- Select **"Static Site"** (this is the correct choice!)
+**Option A: Nixpacks (Recommended - Auto Builds)**
+- **Select**: **"Nixpacks"** build pack
+- Nixpacks automatically:
+  - Detects Vite/React from your `package.json`
+  - Runs `npm install` automatically
+  - Runs `npm run build` automatically
+  - Uses `dist/` as output directory
+  - Handles Node.js version automatically
+- **No manual build configuration needed!**
 
-**Build Configuration:**
-- **Build Command**: `npm install && npm run build`
-- **Publish Directory**: `dist`
-- **Node Version**: `20` (or latest LTS)
-- **Install Command**: `npm install` (default)
+**Option B: Static Build Pack (Pre-Built Files)**
+- **Select**: **"Static"** build pack
+- Requires you to build files locally first
+- Then commit `dist/` folder to git
+- Point base directory to `/dist`
+
+**⚠️ DO NOT Select:**
+- ❌ "Docker Compose" (for frontend)
+- ❌ "Dockerfile" (doesn't exist)
+- The `docker-compose.yaml` files are ONLY for edge functions
+
+**Recommended: Use Nixpacks** - it's automatic and handles everything!
+
+**Note:** When using **Nixpacks**, Coolify v4 shows the build settings that Nixpacks auto-detected:
+- **Install Command**: `npm install` (auto-detected)
+- **Build Command**: `npm run build` (auto-detected)
+- **Publish Directory**: `/dist` (auto-detected from Vite)
+- These are already correct - you can verify them but usually don't need to change them!
 
 ### 10.3 Add Environment Variables
 
-**Critical Step!** Add these environment variables:
+**Critical Step!** These are needed during the build process.
 
-1. Click **"Environment Variables"** tab
-2. Click **"+ Add Variable"** for each:
+1. Go to **Configuration** tab (in your application)
+2. Click **"Environment Variables"** in the left sidebar
+3. Click **"+ Add Variable"** for each:
 
 **Variable 1:**
 - **Name**: `VITE_SUPABASE_URL`
@@ -521,9 +541,10 @@ Now we'll deploy the React frontend application.
 
 Since this is a React Single Page Application, we need special routing:
 
-1. Go to **"Advanced"** or **"Nginx Configuration"** section
-2. Click **"Custom Nginx Configuration"**
-3. Paste this configuration:
+1. In **Configuration → General** tab
+2. Find **"Custom Nginx Configuration"** field (text area)
+3. You can click **"Generate Default Nginx Configuration"** first (optional)
+4. Then paste this configuration in the text area:
 
 ```nginx
 location / {
