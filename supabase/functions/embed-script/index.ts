@@ -225,9 +225,21 @@ serve(async (req) => {
 
   function init() {
     fetch(API_URL + '/get-widget?id=' + WIDGET_ID)
-      .then(function(res) { return res.json(); })
+      .then(function(res) { 
+        if (!res.ok) {
+          console.error('VideoPopup: Failed to fetch widget (HTTP ' + res.status + ')');
+          return res.json().then(function(data) {
+            console.error('VideoPopup error:', data.error || 'Unknown error');
+            return { error: data.error || 'Failed to load widget' };
+          });
+        }
+        return res.json(); 
+      })
       .then(function(config) {
-        if (config.error) return;
+        if (config.error) {
+          console.error('VideoPopup: Widget error -', config.error);
+          return;
+        }
 
         function show() {
           if (document.getElementById('videopopup-widget')) return;
