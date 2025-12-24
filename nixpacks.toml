@@ -14,8 +14,7 @@ cmds = ["npm install"]
 dependsOn = ["install"]
 cmds = ["npm run build"]
 
-# Start command - serve static files from dist directory
-# Using npx serve (included with npm) to serve the built files
+# Start command - serve static files using Node.js HTTP server
 [start]
-cmd = "npx serve -s dist -l 3000"
+cmd = "node server.js"
 
