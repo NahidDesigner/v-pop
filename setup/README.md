@@ -19,17 +19,22 @@ This directory contains all setup files and deployment documentation for VideoPo
 
 ### Reference Documentation
 
-3. **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+3. **[SELF-HOSTED-SUPABASE-CONFIG.md](./SELF-HOSTED-SUPABASE-CONFIG.md)** ⚠️ **IMPORTANT**
+   - Configuration guide for self-hosted Supabase
+   - How to configure auth URLs via Coolify
+   - Getting API keys from Coolify environment variables
+   - **Read this if using self-hosted Supabase!**
+
+4. **[DEPLOYMENT.md](./DEPLOYMENT.md)**
    - Technical deployment reference
    - Multiple deployment options
    - Troubleshooting section
    - **Use this as a technical reference**
 
-4. **[COOLIFY-FEATURES.md](./COOLIFY-FEATURES.md)**
-   - Overview of Coolify features
-   - How Coolify helps with deployment
-   - Best practices
-   - **Use this to understand Coolify capabilities**
+5. **[NEXT-STEPS.md](./NEXT-STEPS.md)**
+   - Post-deployment checklist
+   - Verification steps
+   - **Use this after deployment is complete**
 
 ## 🔧 Setup Files
 
@@ -96,8 +101,9 @@ Use this checklist to ensure you have all files:
 
 - [x] `COMPLETE-DEPLOYMENT-GUIDE.md` - Main deployment guide
 - [x] `QUICK-START.md` - Quick reference
+- [x] `SELF-HOSTED-SUPABASE-CONFIG.md` - Self-hosted Supabase configuration
+- [x] `NEXT-STEPS.md` - Post-deployment checklist
 - [x] `DEPLOYMENT.md` - Technical reference
-- [x] `COOLIFY-FEATURES.md` - Coolify overview (optional)
 - [x] `coolify-config.txt` - Coolify config
 - [x] `complete-migration.sql` - Database schema
 - [x] `create-admin.sql` - Admin creation
@@ -113,6 +119,9 @@ Use this checklist to ensure you have all files:
 ### I know what I'm doing, just need quick steps:
 → **[QUICK-START.md](./QUICK-START.md)**
 
+### I'm using self-hosted Supabase:
+→ **[SELF-HOSTED-SUPABASE-CONFIG.md](./SELF-HOSTED-SUPABASE-CONFIG.md)** ⚠️ **READ THIS FIRST**
+
 ### I need to configure environment variables:
 → **[.env.example](./.env.example)**
 
@@ -124,6 +133,9 @@ Use this checklist to ensure you have all files:
 
 ### I'm configuring Coolify:
 → **[coolify-config.txt](./coolify-config.txt)**
+
+### I've deployed and need next steps:
+→ **[NEXT-STEPS.md](./NEXT-STEPS.md)**
 
 ### I need to deploy edge functions:
 → **[docker-compose.edge-functions.yaml](./docker-compose.edge-functions.yaml)**
