@@ -23,7 +23,16 @@ import Testimonials from "@/pages/dashboard/Testimonials";
 import PublicAnalytics from "@/pages/PublicAnalytics";
 import NotFound from "@/pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // Prevent auto-reload when switching tabs
+      refetchOnMount: false, // Prevent refetch on component mount
+      refetchOnReconnect: true, // Only refetch when internet reconnects
+      staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
