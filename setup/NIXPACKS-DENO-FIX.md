@@ -20,10 +20,9 @@ This file explicitly tells Nixpacks to use Node.js and configure the build proce
 
 ```toml
 [phases.setup]
-nixPkgs = { nodejs = "20" }
+nixPkgs = ["nodejs"]
 
 [phases.install]
-dependsOn = ["setup"]
 cmds = ["npm install"]
 
 [phases.build]
