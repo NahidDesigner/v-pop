@@ -14,8 +14,8 @@ cmds = ["npm install"]
 dependsOn = ["install"]
 cmds = ["npm run build"]
 
-# Override start command - static site served by nginx in Coolify
-# Using sleep infinity to keep container alive (nginx serves files)
+# Start command - serve static files from dist directory
+# Using npx serve (included with npm) to serve the built files
 [start]
-cmd = "sleep infinity"
+cmd = "npx serve -s dist -l 3000"
 
