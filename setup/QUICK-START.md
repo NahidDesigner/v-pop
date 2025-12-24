@@ -96,7 +96,7 @@ Access: `http://your-server-ip:8000`
 ### 8. Deploy Edge Functions (Optional, Through Coolify Dashboard)
 If Supabase doesn't include edge functions:
 1. **In Coolify Dashboard**: **New Resource** → **Docker Compose**
-2. Paste contents of `setup/docker-compose.edge-functions.yml`
+2. Paste contents of `docker-compose.yaml` (from root) or `setup/docker-compose.edge-functions.yaml`
 3. **Environment Variables** tab → Add variables from step 4
 4. Click **Deploy**
 

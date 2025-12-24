@@ -10,7 +10,8 @@ This document reviews all setup files created by Lovable AI for VideoPopup deplo
 | `.env.example` | ✅ Good | Environment variables template | Well documented |
 | `complete-migration.sql` | ✅ Complete | Database schema & migrations | All tables, RLS, functions |
 | `setup.sh` | ⚠️ Needs Update | Interactive setup script | Should mention Coolify Resources |
-| `docker-compose.edge-functions.yml` | ✅ Good | Edge functions Docker setup | Ready to use |
+| `docker-compose.yaml` | ✅ New | Edge functions Docker setup (root, for Coolify) | Ready to use |
+| `docker-compose.edge-functions.yaml` | ✅ Updated | Edge functions Docker setup (reference) | Renamed to .yaml |
 | `nginx-edge-functions.conf` | ✅ Good | Nginx proxy configuration | For edge functions |
 | `coolify-config.txt` | ✅ Updated | Coolify-specific settings | Updated for Resources |
 | `create-admin.sql` | ✅ Good | Admin role assignment script | Simple and clear |
@@ -267,13 +268,13 @@ fi
 DEPLOYMENT.md (main guide)
     ├── References: .env.example
     ├── References: complete-migration.sql
-    ├── References: docker-compose.edge-functions.yml
+    ├── References: docker-compose.yaml (root) or docker-compose.edge-functions.yaml
     └── References: create-admin.sql
 
 setup.sh (interactive script)
     ├── Uses: .env.example (template)
     ├── Uses: complete-migration.sql
-    └── Uses: docker-compose.edge-functions.yml
+    └── Uses: docker-compose.yaml (root)
 
 coolify-config.txt (Coolify specific)
     └── References: .env.example values

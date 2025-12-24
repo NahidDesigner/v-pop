@@ -10,7 +10,8 @@ All 8 setup files created by Lovable AI have been reviewed and verified:
 | `.env.example` | ✅ Good | No changes needed - well documented |
 | `complete-migration.sql` | ✅ Complete | No changes needed - comprehensive |
 | `setup.sh` | ✅ Updated | Added Coolify Resources workflow check |
-| `docker-compose.edge-functions.yml` | ✅ Good | No changes needed - ready to use |
+| `docker-compose.edge-functions.yaml` | ✅ Updated | Renamed to .yaml for Coolify |
+| `docker-compose.yaml` | ✅ New | Created in root for Coolify |
 | `nginx-edge-functions.conf` | ✅ Good | No changes needed - complete config |
 | `coolify-config.txt` | ✅ Updated | Updated for Coolify Resources |
 | `create-admin.sql` | ✅ Good | No changes needed - clear and simple |
@@ -59,7 +60,7 @@ All 8 setup files created by Lovable AI have been reviewed and verified:
 ### For Manual Deployment:
 1. Follow `DEPLOYMENT.md` for manual Supabase setup
 2. Use `setup.sh` for interactive setup
-3. Use `docker-compose.edge-functions.yml` for edge functions
+3. Use `docker-compose.yaml` (root) for edge functions in Coolify
 
 ## 📚 Documentation Structure
 
@@ -74,7 +75,8 @@ setup/
 ├── complete-migration.sql # Database schema (COMPLETE)
 ├── setup.sh               # Interactive script (UPDATED)
 ├── create-admin.sql       # Admin creation (GOOD)
-├── docker-compose.edge-functions.yml  # Edge functions (GOOD)
+├── docker-compose.yaml  # Edge functions (root, for Coolify)
+├── docker-compose.edge-functions.yaml  # Edge functions (reference)
 └── nginx-edge-functions.conf         # Nginx config (GOOD)
 ```
 

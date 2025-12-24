@@ -5,7 +5,8 @@
 # Use this for self-hosting edge functions without Supabase's hosted service
 #
 # Usage:
-#   docker compose -f setup/docker-compose.edge-functions.yml up -d
+#   docker compose -f setup/docker-compose.edge-functions.yaml up -d
+#   Or: docker compose -f docker-compose.yaml up -d (from root)
 # ==============================================================================
 
 version: '3.8'
@@ -20,7 +21,7 @@ services:
     restart: unless-stopped
     working_dir: /app
     volumes:
-      - ../supabase/functions/get-widget:/app:ro
+      - ./supabase/functions/get-widget:/app:ro
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
@@ -40,7 +41,7 @@ services:
     restart: unless-stopped
     working_dir: /app
     volumes:
-      - ../supabase/functions/track-analytics:/app:ro
+      - ./supabase/functions/track-analytics:/app:ro
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
@@ -60,7 +61,7 @@ services:
     restart: unless-stopped
     working_dir: /app
     volumes:
-      - ../supabase/functions/embed-script:/app:ro
+      - ./supabase/functions/embed-script:/app:ro
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
@@ -80,7 +81,7 @@ services:
     restart: unless-stopped
     working_dir: /app
     volumes:
-      - ../supabase/functions/send-lead-notification:/app:ro
+      - ./supabase/functions/send-lead-notification:/app:ro
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}

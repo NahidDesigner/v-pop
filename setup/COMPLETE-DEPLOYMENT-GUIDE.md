@@ -425,8 +425,8 @@ If Supabase doesn't include edge functions, use Docker Compose:
 
 #### 9.2 Configure Docker Compose
 
-1. Create a new file or use the provided one: `setup/docker-compose.edge-functions.yml`
-2. In Coolify, paste the contents of `docker-compose.edge-functions.yml`
+1. Create a new file or use the provided one: `setup/docker-compose.edge-functions.yaml` (or `docker-compose.yaml` in root)
+2. In Coolify, paste the contents of `docker-compose.yaml` (from project root) or `setup/docker-compose.edge-functions.yaml`
 3. Add environment variables:
    ```
    SUPABASE_URL=https://supabase.yourdomain.com
@@ -895,7 +895,8 @@ Save these securely:
 
 - `setup/complete-migration.sql` - Database schema
 - `setup/create-admin.sql` - Admin user creation
-- `setup/docker-compose.edge-functions.yml` - Edge functions
+- `setup/docker-compose.edge-functions.yaml` - Edge functions
+- `docker-compose.yaml` - Edge functions (root, for Coolify)
 - `setup/.env.example` - Environment variables template
 
 ### Common Tasks (All Through Dashboards)

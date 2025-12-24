@@ -74,7 +74,7 @@ This directory contains all setup files and deployment documentation for VideoPo
    - Helps configure environment
    - **Use this for automated setup (optional)**
 
-6. **[docker-compose.edge-functions.yml](./docker-compose.edge-functions.yml)**
+6. **[docker-compose.edge-functions.yaml](./docker-compose.edge-functions.yaml)**
    - Docker Compose for edge functions
    - Deploy edge functions separately
    - **Use this if Supabase doesn't include edge functions**
@@ -113,7 +113,8 @@ Use this checklist to ensure you have all files:
 - [x] `complete-migration.sql` - Database schema
 - [x] `create-admin.sql` - Admin creation
 - [x] `setup.sh` - Setup script
-- [x] `docker-compose.edge-functions.yml` - Edge functions
+- [x] `docker-compose.edge-functions.yaml` - Edge functions
+- [x] `docker-compose.yaml` - Edge functions (root, for Coolify)
 - [x] `nginx-edge-functions.conf` - Nginx config
 
 ## 🎯 Which File Should I Use?
@@ -137,7 +138,7 @@ Use this checklist to ensure you have all files:
 → **[coolify-config.txt](./coolify-config.txt)**
 
 ### I need to deploy edge functions:
-→ **[docker-compose.edge-functions.yml](./docker-compose.edge-functions.yml)**
+→ **[docker-compose.yaml](./docker-compose.yaml)** (root) or **[docker-compose.edge-functions.yaml](./docker-compose.edge-functions.yaml)**
 
 ### I'm troubleshooting:
 → Check troubleshooting sections in [COMPLETE-DEPLOYMENT-GUIDE.md](./COMPLETE-DEPLOYMENT-GUIDE.md) or [DEPLOYMENT.md](./DEPLOYMENT.md)

@@ -156,7 +156,7 @@ If your Supabase resource in Coolify includes edge functions:
 You can deploy each edge function as a separate resource:
 
 1. **Create New Resource** → **Docker Compose** or **Dockerfile**
-2. Use the provided `setup/docker-compose.edge-functions.yml`
+2. Use the provided `docker-compose.yaml` (root) or `setup/docker-compose.edge-functions.yaml`
 3. Or create individual Docker resources for each function
 4. Configure environment variables:
    - `SUPABASE_URL`
@@ -183,7 +183,7 @@ supabase functions deploy send-lead-notification
 
 ### 3.4 Option D: Self-Hosted Deno (Docker Compose)
 
-Use the provided `setup/docker-compose.edge-functions.yml`:
+Use the provided `docker-compose.yaml` (root) or `setup/docker-compose.edge-functions.yaml`:
 
 ```bash
 # Set environment variables
@@ -192,7 +192,8 @@ export SUPABASE_ANON_KEY=your-anon-key
 export SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
 # Deploy
-docker compose -f setup/docker-compose.edge-functions.yml up -d
+docker compose -f docker-compose.yaml up -d
+# Or: docker compose -f setup/docker-compose.edge-functions.yaml up -d
 ```
 
 ### 3.5 Option E: Deno Deploy (External)
@@ -412,6 +413,7 @@ supabase secrets set SMTP_PASSWORD=your-smtp-password
 |------|---------|
 | `setup/.env.example` | Environment template |
 | `setup/complete-migration.sql` | All database migrations |
-| `setup/docker-compose.edge-functions.yml` | Edge functions Docker setup |
+| `docker-compose.yaml` | Edge functions Docker setup (root, for Coolify) |
+| `setup/docker-compose.edge-functions.yaml` | Edge functions Docker setup (reference) |
 | `supabase/functions/` | Edge function source code |
 | `supabase/config.toml` | Supabase configuration |
