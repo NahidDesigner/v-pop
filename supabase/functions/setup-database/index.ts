@@ -46,40 +46,36 @@ serve(async (req) => {
 });
 
 async function runMigrations(supabase: any) {
-  // Read all migration files and run them
-  // For now, we'll run a simplified version that creates essential tables
-  
-  const migrations = [
-    // Check if tables exist, if not create them
-    `CREATE TABLE IF NOT EXISTS public.user_roles (
-      user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-      role app_role NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-      UNIQUE(user_id, role)
-    );`,
-    
-    `CREATE TYPE IF NOT EXISTS app_role AS ENUM ('admin', 'agency', 'user');`,
-    
-    `CREATE TABLE IF NOT EXISTS public.profiles (
-      id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-      full_name TEXT,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-    );`,
-    
-    // Add more essential tables...
-  ];
+  // Check if migrations have already been run by checking if user_roles table exists
+  try {
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('user_id')
+      .limit(1);
 
-  for (const migration of migrations) {
-    const { error } = await supabase.rpc('exec_sql', { sql: migration });
-    if (error) {
-      // Try direct query if RPC doesn't work
-      console.log('Migration note:', error.message);
+    if (!error) {
+      // Table exists, migrations likely already run
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Database tables already exist. Migrations may have been run manually.',
+          note: 'If you need to run migrations, please do so via Supabase Studio SQL Editor.'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
+  } catch (err) {
+    console.log('Table check error (expected if not set up):', err);
   }
 
+  // For now, return success with a note that migrations should be run manually
+  // In the future, this can read and execute migration files
   return new Response(
-    JSON.stringify({ success: true, message: 'Migrations completed' }),
+    JSON.stringify({ 
+      success: true, 
+      message: 'Migration check completed. Please run migrations manually via Supabase Studio SQL Editor.',
+      note: 'Copy all SQL files from supabase/migrations/ folder and run them in Supabase Studio → SQL Editor.'
+    }),
     { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
   );
 }
