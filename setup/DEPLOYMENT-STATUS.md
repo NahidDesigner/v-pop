@@ -17,7 +17,7 @@ Your deployment **completed successfully**! The application built and deployed c
 
 **Why:** Nixpacks default nixpkgs archive contains Node.js 18.
 
-**Fix Attempt:** Added `NIXPACKS_NODE_VERSION = "20"` to `nixpacks.toml`, but this may not work as expected.
+**Fix Attempt:** Added `NIXPACKS_NODE_VERSION = "20"` to `nixpacks.toml`. The variable is being recognized (visible in build logs), but Nixpacks still uses Node.js 18 from the pinned nixpkgs archive.
 
 **Workaround:** This is non-critical since the build succeeded. If you want to force Node.js 20, we may need to use a specific nixpkgs archive version.
 
