@@ -11,6 +11,3 @@ verify_jwt = false
 
 [functions.send-lead-notification]
 verify_jwt = false
-
-[functions.setup-database]
-verify_jwt = false

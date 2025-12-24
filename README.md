@@ -1,20 +1,8 @@
-# Widget Wizard Pro - Video Popup Platform
-
-A powerful video popup widget platform built with React, TypeScript, and Supabase. Create, customize, and embed beautiful video popups on any website.
-
-## Features
-
-- 🎥 **Video Widget Builder** - Create vertical and horizontal video popups
-- 🎨 **Fully Customizable** - Colors, positioning, triggers, and CTAs
-- 📊 **Analytics Dashboard** - Track views, clicks, and conversions
-- 👥 **Client Management** - Manage multiple clients and widgets
-- 🔐 **Role-Based Access** - Admin, agency, and user roles
-- 📱 **Responsive Design** - Works on all devices
-- 🚀 **Easy Embedding** - One-line JavaScript embed code
+# Welcome to your Lovable project
 
 ## Project info
 
-**Repository**: https://github.com/NahidDesigner/videopop
+**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
 ## How can I edit this code?
 
@@ -72,53 +60,14 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## Deployment
+## How can I deploy this project?
 
-### Quick Deploy with Coolify
+Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
-See **[coolify-deploy.md](./coolify-deploy.md)** for a quick start guide.
+## Can I connect a custom domain to my Lovable project?
 
-### Full Deployment Guide
+Yes, you can!
 
-For complete deployment instructions including self-hosted Supabase setup, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-### Environment Variables
-
-Copy `.env.example` to `.env` and fill in your Supabase credentials:
-
-```bash
-cp .env.example .env
-```
-
-Required variables:
-- `VITE_SUPABASE_URL` - Your Supabase API URL
-- `VITE_SUPABASE_PUBLISHABLE_KEY` - Supabase Anon/Public Key
-- `VITE_SUPABASE_PROJECT_ID` - Supabase Project ID
-
-## Tech Stack
-
-- **Frontend**: React 18, TypeScript, Vite
-- **UI**: shadcn/ui, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Auth, Edge Functions)
-- **State Management**: TanStack Query
-- **Routing**: React Router
-- **Forms**: React Hook Form + Zod
-
-## Project Structure
-
-```
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/         # Route pages
-│   ├── hooks/         # Custom React hooks
-│   ├── integrations/  # Supabase client
-│   └── types/         # TypeScript definitions
-├── supabase/
-│   ├── migrations/    # Database migrations
-│   └── functions/     # Edge Functions
-└── public/            # Static assets
-```
-
-## License
-
-This project is private and proprietary.
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

@@ -75,7 +75,7 @@ export default function Settings() {
             After creating a widget, you'll get an embed code that looks like this:
           </p>
           <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto break-all whitespace-pre-wrap">
-            <code>{`<script src="${(import.meta.env.VITE_SUPABASE_URL || '').replace(/\/$/, '')}/functions/v1/embed-script?id=[widget-id]" async></script>`}</code>
+            <code>{`<script src="${import.meta.env.VITE_SUPABASE_URL}/functions/v1/embed-script?id=[widget-id]" async></script>`}</code>
           </pre>
           <p className="text-sm text-muted-foreground">
             Simply copy this code and paste it into your client's website, 

@@ -22,19 +22,8 @@ import Samples from "@/pages/dashboard/Samples";
 import Testimonials from "@/pages/dashboard/Testimonials";
 import PublicAnalytics from "@/pages/PublicAnalytics";
 import NotFound from "@/pages/NotFound";
-import Setup from "@/pages/Setup";
-import SetupGuard from "@/components/SetupGuard";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false, // Prevent auto-reload when switching tabs
-      refetchOnMount: false, // Prevent refetch on component mount
-      refetchOnReconnect: true, // Only refetch when internet reconnects
-      staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -46,14 +35,11 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/setup" element={<Setup />} />
             <Route path="/analytics/:token" element={<PublicAnalytics />} />
             <Route path="/dashboard" element={
-              <SetupGuard>
-                <ProtectedRoute requireAdmin>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              </SetupGuard>
+              <ProtectedRoute requireAdmin>
+                <DashboardLayout />
+              </ProtectedRoute>
             }>
               <Route index element={<Overview />} />
               <Route path="widgets" element={<Widgets />} />

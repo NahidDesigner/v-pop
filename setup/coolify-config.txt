@@ -1,0 +1,67 @@
+# ==============================================================================
+# VideoPopup - Coolify Configuration
+# ==============================================================================
+# Add these settings in your Coolify dashboard for the VideoPopup service
+# ==============================================================================
+
+# ============================================================================
+# SERVICE TYPE
+# ============================================================================
+# Select: Static Site (recommended) or Nixpacks
+
+# ============================================================================
+# BUILD CONFIGURATION
+# ============================================================================
+Build Command: npm install && npm run build
+Publish Directory: dist
+Node Version: 20
+
+# ============================================================================
+# ENVIRONMENT VARIABLES (Build & Runtime)
+# ============================================================================
+# Copy and paste these into Coolify's Environment Variables section
+
+VITE_SUPABASE_URL=https://supabase.yourdomain.com
+VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key-here
+VITE_SUPABASE_PROJECT_ID=videopop
+
+# ============================================================================
+# DOMAIN CONFIGURATION
+# ============================================================================
+# Add your domain(s) in the Domains tab:
+# - Primary: videopop.yourdomain.com
+# - Enable SSL: Yes (Let's Encrypt)
+# - Force HTTPS: Yes
+
+# ============================================================================
+# ADVANCED: Nginx Configuration (if using Static Site)
+# ============================================================================
+# For SPA routing support, add this to Custom Nginx Configuration:
+
+location / {
+    try_files $uri $uri/ /index.html;
+}
+
+# Cache static assets
+location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+
+# Security headers
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-XSS-Protection "1; mode=block" always;
+
+# ============================================================================
+# HEALTH CHECK
+# ============================================================================
+# Path: /
+# Interval: 30s
+# Timeout: 10s
+
+# ============================================================================
+# RESOURCE LIMITS (Optional)
+# ============================================================================
+# Memory: 256MB
+# CPU: 0.5 cores

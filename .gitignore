@@ -12,15 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Build scripts (keep these)
-!build.sh
-
-# Environment variables
-.env
-.env.local
-.env.production
-.env.development
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
