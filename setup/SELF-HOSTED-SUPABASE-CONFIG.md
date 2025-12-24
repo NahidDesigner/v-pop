@@ -59,7 +59,7 @@ SUPABASE_ADDITIONAL_REDIRECT_URLS=https://vpop.vibecodingfield.com/**
 
 ---
 
-### 3. Enable Email Authentication (Optional)
+### 3. Enable Email Authentication & Configure Email Confirmation
 
 Email authentication is usually enabled by default. To configure:
 
@@ -72,14 +72,18 @@ AUTH_ENABLE_SIGNUP=true
 # Enable email authentication
 AUTH_EXTERNAL_EMAIL_ENABLED=true
 
-# Disable email confirmation (for testing)
+# Disable email confirmation (for testing - users can login immediately)
 AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=false
 
-# OR enable email confirmation (for production)
+# OR enable email confirmation (for production - more secure)
 AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=true
 ```
 
+**Important:** If users are getting "Email is not confirmed" errors, set `AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=false` and redeploy.
+
 **Redeploy** Supabase resource after changes.
+
+**See also:** `setup/DISABLE-EMAIL-CONFIRMATION.md` for detailed instructions.
 
 ---
 
