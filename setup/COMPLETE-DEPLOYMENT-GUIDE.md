@@ -465,38 +465,21 @@ Now we'll deploy the React frontend application.
 
 ### 10.2 Configure Build Settings
 
-**⚠️ CRITICAL: Build Pack Selection in Coolify v4**
+**✅ Use Dockerfile Build Pack**
 
-In **Coolify v4**, you have two options:
+This project uses a **Dockerfile** for deployment, which is the recommended approach for static sites.
 
-**Option A: Nixpacks (Recommended - Auto Builds)**
-- **Select**: **"Nixpacks"** build pack
-- Nixpacks automatically:
-  - Detects Vite/React from your `package.json`
-  - Runs `npm install` automatically
-  - Runs `npm run build` automatically
-  - Uses `dist/` as output directory
-  - Handles Node.js version automatically
-- **No manual build configuration needed!**
+1. In **Configuration → General** tab
+2. **Build Pack**: Select **"Dockerfile"**
+3. Coolify will automatically detect the `Dockerfile` in the root directory
+4. No additional configuration needed - the Dockerfile handles everything!
 
-**Option B: Static Build Pack (Pre-Built Files)**
-- **Select**: **"Static"** build pack
-- Requires you to build files locally first
-- Then commit `dist/` folder to git
-- Point base directory to `/dist`
-
-**⚠️ DO NOT Select:**
-- ❌ "Docker Compose" (for frontend)
-- ❌ "Dockerfile" (doesn't exist)
-- The `docker-compose.yaml` files are ONLY for edge functions
-
-**Recommended: Use Nixpacks** - it's automatic and handles everything!
-
-**Note:** When using **Nixpacks**, Coolify v4 shows the build settings that Nixpacks auto-detected:
-- **Install Command**: `npm install` (auto-detected)
-- **Build Command**: `npm run build` (auto-detected)
-- **Publish Directory**: `/dist` (auto-detected from Vite)
-- These are already correct - you can verify them but usually don't need to change them!
+**What the Dockerfile does:**
+- ✅ Builds your Vite/React app with Node.js 20
+- ✅ Creates optimized production build in `dist/` directory
+- ✅ Serves static files with Nginx
+- ✅ Includes SPA routing support for React Router
+- ✅ Handles environment variables during build
 
 ### 10.3 Add Environment Variables
 
