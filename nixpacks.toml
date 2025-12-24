@@ -1,5 +1,5 @@
 # Nixpacks Configuration for VideoPopup Frontend
-# Forces Node.js 20 and build process
+# Forces Node.js and build process
 
 [variables]
 NIXPACKS_NODE_VERSION = "20"
@@ -14,6 +14,8 @@ cmds = ["npm install"]
 dependsOn = ["install"]
 cmds = ["npm run build"]
 
-# Static site - no start command (served by nginx in Coolify)
-# Note: We don't specify a start command here because Coolify serves static files with nginx
+# Override start command - static site served by nginx in Coolify
+# Using sleep infinity to keep container alive (nginx serves files)
+[start]
+cmd = "sleep infinity"
 
