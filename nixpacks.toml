@@ -1,8 +1,8 @@
 # Nixpacks Configuration for VideoPopup Frontend
-# Forces Node.js 20 and build process
+# Forces Node.js and build process
 
 [phases.setup]
-nixPkgs = ["nodejs-20_x"]
+nixPkgs = ["nodejs"]
 
 [phases.install]
 cmds = ["npm ci"]
@@ -14,4 +14,9 @@ cmds = ["npm run build"]
 # For static site deployment
 [staticAssets]
 outputDir = "dist"
+
+# Override Deno start command - not needed for static sites
+# Coolify's nginx will serve the static files from dist/
+[start]
+cmd = "sleep infinity"
 
