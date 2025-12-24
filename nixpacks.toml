@@ -1,0 +1,16 @@
+# Nixpacks Configuration for VideoPopup Frontend
+# Forces Node.js detection and build process
+
+[phases.setup]
+nixPkgs = { nodejs = "20" }
+
+[phases.install]
+dependsOn = ["setup"]
+cmds = ["npm install"]
+
+[phases.build]
+dependsOn = ["install"]
+cmds = ["npm run build"]
+
+# Static site - no start command needed (served by nginx)
+
