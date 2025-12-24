@@ -352,36 +352,58 @@ Now we'll create all the database tables, security rules, and functions needed f
 
 ---
 
-## 8. Configure Supabase Authentication
+## 8. Configure Supabase Authentication (Self-Hosted)
 
-> **All done through Supabase Dashboard UI - no commands needed!**
+> **⚠️ IMPORTANT for Self-Hosted Supabase:** Configuration is done through Coolify's environment variables, NOT through Supabase Dashboard UI.
 
-### 8.1 Configure Site URL
+### 8.1 Get Supabase Credentials from Coolify
 
-1. In Supabase Dashboard (accessed through Coolify), click **"Authentication"** in the left sidebar
-2. Click **"URL Configuration"** or **"Settings"** tab
-3. Fill in the form:
-   - **Site URL**: `https://videopop.yourdomain.com` (or your app URL)
-   - **Redirect URLs**: `https://videopop.yourdomain.com/**` (allows all paths)
-4. Click **"Save"** or **"Update"**
+1. **In Coolify Dashboard**, go to your **Supabase Resource**
+2. **Click on the Supabase resource** to open its details
+3. **Go to "Configuration" tab** → **"Environment Variables"** section
+4. **Copy these values** (you'll need them):
+   - `SUPABASE_ANON_KEY` - This is your "Anon Key" / "Publishable Key"
+   - `SUPABASE_SERVICE_ROLE_KEY` - This is your "Service Role Key"
+   - The **URL/Domain** of your Supabase resource (from resource details)
+
+**Note:** In self-hosted Supabase, there's no separate "API" page. All keys are in environment variables.
+
+### 8.2 Configure Authentication URLs (Environment Variables)
+
+For self-hosted Supabase, authentication URLs are configured through environment variables:
+
+1. **In Coolify Dashboard**, go to your **Supabase Resource**
+2. **Configuration** → **Environment Variables**
+3. **Add or update these environment variables**:
+
+```
+SITE_URL=https://vpop.vibecodingfield.com
+ADDITIONAL_REDIRECT_URLS=https://vpop.vibecodingfield.com/**,
+```
+
+**Or if your Supabase uses different variable names, try:**
+- `SUPABASE_SITE_URL=https://vpop.vibecodingfield.com`
+- `SUPABASE_ADDITIONAL_REDIRECT_URLS=https://vpop.vibecodingfield.com/**`
 
 **If you don't have a domain yet:**
-- Use: `http://your-server-ip:PORT` (where PORT is your frontend port from Coolify)
-- You can update this later in the dashboard when you add a domain
+- Use: `http://your-server-ip:PORT` (replace PORT with your frontend port)
 
-**Everything is done through the web interface - just fill in the form and save!**
+4. **Save** the environment variables
+5. **Redeploy** the Supabase resource for changes to take effect
 
-### 8.2 Enable Email Authentication
+### 8.3 Enable Email Authentication (Optional)
 
-1. Still in **Authentication** section, click **"Providers"** tab
-2. Find **"Email"** provider in the list
-3. Toggle it **ON** or click **"Enable"**
-4. Configure **Email confirmation**:
-   - **Disable** for testing (easier to get started)
-   - **Enable** for production (more secure)
-5. Click **"Save"**
+Email authentication is typically enabled by default in self-hosted Supabase. If you need to configure it:
 
-**For production:** You'll configure SMTP (email server) later through the dashboard.
+1. **Check environment variables** in Supabase resource for:
+   - `AUTH_ENABLE_SIGNUP=true` (should be enabled)
+   - `AUTH_EXTERNAL_EMAIL_ENABLED=true`
+
+**For email confirmation:**
+- To disable (for testing): `AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=false`
+- To enable (for production): `AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=true`
+
+**All configuration is done through Coolify's environment variables - no Supabase Dashboard UI needed!**
 
 ### 8.3 Test Authentication (Optional)
 
@@ -605,18 +627,13 @@ To access the dashboard, you need to create an admin user. This is done entirely
 
 **All done through the web interface - just fill in the form!**
 
-### 11.2 Get Your User ID (Through Dashboard)
+### 11.2 Get Your User ID (Using SQL Editor)
 
-**Option 1: Using Supabase Dashboard UI**
-1. Open Supabase Dashboard (through Coolify)
-2. Go to **"Authentication"** → **"Users"** tab
-3. Find your email in the users list
-4. Click on your user to view details
-5. **Copy the User ID** (UUID format, like: `123e4567-e89b-12d3-a456-426614174000`)
-
-**Option 2: Using SQL Editor (Still in Dashboard)**
-1. In Supabase Dashboard, go to **"SQL Editor"**
-2. Run this query (replace with your email):
+**For Self-Hosted Supabase:**
+1. **Access Supabase SQL Editor** (this should be available in your Supabase resource in Coolify)
+   - Look for "SQL Editor" or "Database" section in the Supabase resource
+   - Or access via the Supabase URL (usually available through Coolify resource details)
+2. **Run this query** (replace with your email):
 
 ```sql
 SELECT id, email, created_at 
@@ -624,9 +641,9 @@ FROM auth.users
 WHERE email = 'your-email@example.com';
 ```
 
-3. Copy the `id` value from the results
+3. **Copy the `id` value** from the results (UUID format)
 
-**Both methods are done in your browser - no terminal needed!**
+**Note:** If you can't access SQL Editor through the UI, you can also run queries through Coolify's terminal/exec feature if available.
 
 ### 11.3 Assign Admin Role (Through SQL Editor)
 

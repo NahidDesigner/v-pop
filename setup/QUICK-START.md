@@ -38,13 +38,15 @@ Access: `http://your-server-ip:8000`
 
 **All done through the dashboard - just fill in forms and click buttons!**
 
-### 4. Get Credentials (From Coolify Dashboard)
+### 4. Get Credentials (From Coolify Dashboard - Self-Hosted)
 **In Coolify Dashboard**, go to your Supabase resource:
-- **URL**: Resource → Details tab → Copy URL
-- **Anon Key**: Resource → Environment Variables tab → `SUPABASE_ANON_KEY`
-- **Service Role Key**: Resource → Environment Variables tab → `SUPABASE_SERVICE_ROLE_KEY`
+- **URL**: Resource → Details tab → Copy URL/Domain
+- **Anon Key**: Resource → Configuration → Environment Variables → `SUPABASE_ANON_KEY`
+- **Service Role Key**: Resource → Configuration → Environment Variables → `SUPABASE_SERVICE_ROLE_KEY`
 
-**All visible in the dashboard - just copy and paste!**
+**All visible in Coolify's dashboard - just copy and paste!**
+
+**Important:** Self-hosted Supabase doesn't have a separate "API" page. All keys are in environment variables section.
 
 ### 5. Run Database Migration (In Supabase Dashboard)
 1. **Open Supabase Dashboard** (accessed through Coolify)

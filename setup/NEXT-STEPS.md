@@ -24,14 +24,26 @@ If you haven't already:
 
 ---
 
-## ✅ 3. Configure Supabase Authentication
+## ✅ 3. Configure Supabase Authentication (Self-Hosted)
 
-1. **In Supabase Dashboard** → Authentication → URL Configuration
-2. **Add Site URL**: `https://vpop.vibecodingfield.com/`
-3. **Add Redirect URLs**: 
-   - `https://vpop.vibecodingfield.com/**`
-   - `https://vpop.vibecodingfield.com/auth/callback`
-4. **Save** changes
+**For Self-Hosted Supabase, configure through Coolify environment variables:**
+
+1. **In Coolify Dashboard** → Go to your **Supabase Resource**
+2. **Configuration** → **Environment Variables**
+3. **Add or update these variables**:
+
+```
+SITE_URL=https://vpop.vibecodingfield.com
+ADDITIONAL_REDIRECT_URLS=https://vpop.vibecodingfield.com/**
+```
+
+**Alternative variable names** (depending on Supabase version):
+- `SUPABASE_SITE_URL=https://vpop.vibecodingfield.com`
+- `SUPABASE_ADDITIONAL_REDIRECT_URLS=https://vpop.vibecodingfield.com/**`
+
+4. **Save** and **Redeploy** Supabase resource for changes to take effect
+
+**Note:** Self-hosted Supabase doesn't have the same Dashboard UI as hosted version. All configuration is done through Coolify's environment variables.
 
 ---
 

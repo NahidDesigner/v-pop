@@ -298,23 +298,36 @@ add_header X-XSS-Protection "1; mode=block" always;
 
 ---
 
-## 🔐 Part 5: Auth Configuration
+## 🔐 Part 5: Auth Configuration (Self-Hosted Supabase)
 
-### 5.1 Configure Redirect URLs
+### 5.1 Configure Redirect URLs (Via Coolify Environment Variables)
 
-In Supabase Dashboard → Authentication → URL Configuration:
+**For Self-Hosted Supabase:** Configuration is done through Coolify, not Supabase Dashboard.
 
-| Setting | Value |
-|---------|-------|
-| Site URL | `https://videopop.yourdomain.com` |
-| Redirect URLs | `https://videopop.yourdomain.com/**` |
+1. **In Coolify Dashboard** → Go to your **Supabase Resource**
+2. **Configuration** → **Environment Variables**
+3. **Add/Update these variables**:
 
-### 5.2 Enable Email Auth
+| Variable Name | Value |
+|--------------|-------|
+| `SITE_URL` | `https://videopop.yourdomain.com` |
+| `ADDITIONAL_REDIRECT_URLS` | `https://videopop.yourdomain.com/**` |
 
-In Authentication → Providers:
-- Enable Email provider
-- Enable "Confirm email" if you have SMTP configured
-- Or disable email confirmation for testing
+**Alternative variable names** (try these if above don't work):
+- `SUPABASE_SITE_URL`
+- `SUPABASE_ADDITIONAL_REDIRECT_URLS`
+
+4. **Save** and **Redeploy** Supabase resource
+
+### 5.2 Enable Email Auth (Via Environment Variables)
+
+**In Coolify** → Supabase Resource → Environment Variables:
+
+- `AUTH_ENABLE_SIGNUP=true` (enable signup)
+- `AUTH_EXTERNAL_EMAIL_ENABLED=true` (enable email auth)
+- `AUTH_ENABLE_SIGNUP_EMAIL_CONFIRMATION=false` (disable for testing) or `true` (enable for production)
+
+**Redeploy** Supabase resource after changes
 
 ### 5.3 Create Admin User
 
